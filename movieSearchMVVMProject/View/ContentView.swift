@@ -8,14 +8,30 @@
 import SwiftUI
 
 struct ContentView: View {
+   @ObservedObject var movieListVİewModel : MovieListViewModel
+    
+    init() {
+        self.movieListVİewModel = MovieListViewModel()
+        self.movieListVİewModel.searchMovie(filmName: "titanic")
+    }
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        List(movieListVİewModel.movies,id: \.imdbId) { film in
+            HStack {
+                Image("film")
+                    .resizable()
+                    .frame(width: 100 ,height: 100)
+                VStack (alignment: .leading) {
+                    Text(film.title)
+                        .font(.title2)
+                        .foregroundColor(.blue)
+                    Text(film.year)
+                        .font(.title3)
+                        .foregroundColor(.red)
+                }
+            }
+            
         }
-        .padding()
     }
 }
 

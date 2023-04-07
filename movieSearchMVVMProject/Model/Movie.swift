@@ -17,7 +17,7 @@ struct Movie : Codable {
     private enum CodingKeys: String,CodingKey {//burada proplarımızın bazen metot olabileceği için internetten çektiğimiz verileri enum yapısıyla karşılığını giriyoruz
         case title = "Title"
         case year = "Year"
-        case imdbId = "imbdId"
+        case imdbId = "imdbID"
         case type = "Type"
         case poster = "Poster"
     }
@@ -27,6 +27,6 @@ struct IncomingData : Codable {
     let movies: [Movie]
     
     private enum CodingKeys : String,CodingKey {
-        case movies = "Search "
+        case movies = "Search"
     }
 }
