@@ -15,7 +15,7 @@ class DownLoaderClient {
             return complation(.failure(.yanlisUrl))
         }
         
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
+        URLSession.shared.dataTask(with: url) { (data, response, error) in//apiden değerleri çeker
             guard let data = data ,error == nil else {
                 return complation(.failure(.veriGelmedi))
             }
@@ -26,6 +26,23 @@ class DownLoaderClient {
             complation(.success(movieResult.movies))
         }.resume()
         
+    }
+    
+    func downloadDetail(imdbId : String,complation : @escaping(Result<MovieDetail,DownLoadError>)->Void) {
+        guard let url = URL(string: "https://www.omdbapi.com/?i=\(imdbId)&apikey=565d3370") else {
+            return complation(.failure(.yanlisUrl))
+        }
+        URLSession.shared.dataTask(with: url) {(data,response,error) in
+            guard let data = data,error == nil else {
+                return complation(.failure(.veriGelmedi))
+            }
+            
+            guard let detailResult = try? JSONDecoder().decode(MovieDetail.self, from: data) else {
+                return complation(.failure(.veriIslenmedi))
+            }
+            
+            complation(.success(detailResult))
+        }.resume()
     }
 }
 

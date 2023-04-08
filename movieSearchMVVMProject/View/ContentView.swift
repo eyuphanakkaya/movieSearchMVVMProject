@@ -9,29 +9,45 @@ import SwiftUI
 
 struct ContentView: View {
    @ObservedObject var movieListVİewModel : MovieListViewModel
-    
+    @State var sourcePanel = ""
     init() {
         self.movieListVİewModel = MovieListViewModel()
-        self.movieListVİewModel.searchMovie(filmName: "titanic")
+      
     }
     
     var body: some View {
-        List(movieListVİewModel.movies,id: \.imdbId) { film in
-            HStack {
-                Image("film")
-                    .resizable()
-                    .frame(width: 100 ,height: 100)
-                VStack (alignment: .leading) {
-                    Text(film.title)
-                        .font(.title2)
-                        .foregroundColor(.blue)
-                    Text(film.year)
-                        .font(.title3)
-                        .foregroundColor(.red)
+        NavigationView{
+            VStack{
+                TextField("Film Ara", text: $sourcePanel, onEditingChanged: { _ in}, onCommit: {  self.movieListVİewModel.searchMovie(filmName: sourcePanel
+                    .trimmingCharacters(in: .whitespacesAndNewlines).addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? sourcePanel)})
+                        .padding()
+                        .textFieldStyle(.roundedBorder)
+                
+                List(movieListVİewModel.movies,id: \.imdbId) { film in
+                    
+                    NavigationLink(destination: DetailView(imdbId: film.imdbId), label: {
+                        HStack {
+                            CustomImage(url: film.poster)
+                                .frame(width: 100 ,height: 130)
+                            VStack (alignment: .leading) {
+                                Text(film.title)
+                                    .font(.title2)
+                                    .foregroundColor(.blue)
+                                Text(film.year)
+                                    .font(.title3)
+                                    .foregroundColor(.red)
+                            }
+                        }
+                    }
+
+                    )
+                    
+
+                    
                 }
             }
-            
         }
+    
     }
 }
 

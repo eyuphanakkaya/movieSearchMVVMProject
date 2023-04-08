@@ -24,7 +24,7 @@ class ImageDownLoader : ObservableObject {
                 return
             }
             DispatchQueue.main.async {
-                self.$downloadImage = data
+                self.downloadImage = data
 
             }
         }.resume()
