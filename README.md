@@ -1,5 +1,5 @@
 
-An application that gives details about movies that searches the movie archive shot via Api using the mvvm design pattern.
+An application that gives details about movies that searches the movie archive shot via API using the MVVM design pattern.
 
 
 
